@@ -1,10 +1,6 @@
 from gurobipy import Model, GRB, quicksum
-from flask import Flask
-
-app = Flask(__name__)
-
 def Best3Attackers():
-# Data
+
     players = range(6)  # 6 attackers
     matches = range(10)  # 10 matches
     G = [1.7, 1.49, 1.27, 1.06, 0.85, 0.64]  # Goals per game for each player
@@ -80,8 +76,7 @@ def Best3Attackers():
     for i in players:
         print(f"Player {i + 1}: Played {player_counts[i]} matches")
 
-    # Display total goals for the season
+
     print(f"\nTotal goals scored in the season: {total_goals:.2f}")
 
-# Run the function
-Best3Attackers()
+
