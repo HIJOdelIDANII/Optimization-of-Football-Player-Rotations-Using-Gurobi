@@ -1,23 +1,24 @@
 import "./ChooseTeam.css"
+import { useNavigate } from "react-router-dom";
+export const ChooseTeam = ({teams=[]}) => {
+    const navigate = useNavigate()
+    return (
 
-export const ChooseTeam = () => {
-  const teams = [
-    { id: 1, name: "Liverpool", logo: "/images/teams/Liverpool.jpg" },
-    { id: 2, name: "Manchester City", logo: "/images/teams/ManchesterCity.jpg" },
-    { id: 3, name: "Manchester United", logo: "/images/teams/ManchesterUnited.jpg" },
-  ];
+        <div className="choose-team-container">
+            <h1 className="title">Choose Your Favorite Team</h1>
+            {   teams.length> 0 ? (
+                <div className="card-container">
+                    {teams.map((team) => (
+                        <div key={team.id} className="team-card" onClick={()=> navigate(`/teams/${team.team_name}`)}>
+                            <img src={team.logo_path} alt={`${team.team_name} Logo`} className="team-logo"/>
+                            <div className="team-name">{team.team_name}</div>
+                        </div>
 
-  return (
-    <div className="choose-team-container">
-      <h1 className="title">Choose Your Favorite Team</h1>
-      <div className="card-container">
-        {teams.map((team) => (
-          <div key={team.id} className="team-card">
-            <img src={team.logo} alt={`${team.name} Logo`} className="team-logo" />
-            <div className="team-name">{team.name}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
+                    ))}</div>)
+                    :(
+                    <p className="no-teams-message">No teams available.</p> )
+                    }
+
+        </div>
+            );
+        };
