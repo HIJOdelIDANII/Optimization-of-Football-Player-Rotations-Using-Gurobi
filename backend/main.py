@@ -45,7 +45,6 @@ def show_players_for_team(team_name):
     }), 200
 @app.route("/api/optimise/<string:team_name>/", methods=["POST"])
 def optimise(team_name):
-    team_name = unquote(team_name)  # Decode team_name
     number_of_games = request.json.get("numberMatches")
     matches_chosen = request.json.get("matchesChosen")
 
@@ -59,8 +58,9 @@ def optimise(team_name):
     # Extract difficulty list
     try:
         difficulty_list = [value["difficulty"] for key, value in matches_chosen.items()]
+        oponents_list = [value["opponent"] for key,value in matches_chosen.items()]
     except KeyError:
-        return jsonify({"message": "Each match must have a 'difficulty' field"}), 400
+        return jsonify({"message": "Each match must have a 'difficulty' and 'oponent'field"}), 400
 
     # Fetch team
     team = Team.query.filter_by(team_name=team_name).first()
@@ -71,9 +71,10 @@ def optimise(team_name):
     players = team.players
     physicality_list = [player.physicality for player in players]
     goals_list = [player.potential_goals_per_game for player in players]
+    players_names_list = [player.player_name for player in players]
 
     # Call optimisation logic
-    result = bestThree(number_of_games, difficulty_list, physicality_list, goals_list)
+    result = bestThree(number_of_games, difficulty_list, physicality_list, goals_list,players_names_list,oponents_list )
     return result, 200
 
 if __name__ == '__main__':

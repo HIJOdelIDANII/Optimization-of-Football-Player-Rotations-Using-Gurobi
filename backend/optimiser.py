@@ -1,10 +1,9 @@
 from gurobipy import Model, GRB, quicksum
 
 def Best3Attackers():
-
     players = range(6)  # 6 attackers
-    matches = range(38)  # 10 matches
-    G = [1.7, 1.6, 1.27, 1.06, 0.85, 0.64]  # Goals per game for each player
+    matches = range(38)  # 38 matches
+    G = [1.5, 1.6, 1.27, 1.06, 0.5, 0.2]  # Goals per game for each player
     P = [3, 2, 2, 1, 1, 1]  # Maximum consecutive matches based on physicality
     C = [1.0, 0.5, 1.5, 1.0, 0.5, 1.5, 1.0, 0.5, 1.5, 1.0, 0.5, 1.5,
          1.0, 0.5, 1.5, 1.0, 0.5, 1.5, 1.0, 0.5, 1.5, 1.0, 0.5, 1.5,
@@ -14,15 +13,11 @@ def Best3Attackers():
     m = Model("Football Rotation with Synergy and Match Complexity")
     m.setParam('OutputFlag', 0)
 
-
     x = m.addVars(players, matches, vtype=GRB.BINARY, name="x")  # Player selection
-    y = m.addVars(players, players, matches, vtype=GRB.BINARY, name="y")  # Player pairs in a match
-
 
     # Team size
     for t in matches:
         m.addConstr(quicksum(x[i, t] for i in players) == 3, name=f"TeamSize_Match{t}")
-
 
     # Consecutive match constraint
     for i in players:
@@ -35,13 +30,18 @@ def Best3Attackers():
     # Rest key players for easier matches
     for t in matches:
         if C[t] == 0.5:  # Easy match
-            m.addConstr(quicksum(x[i, t] for i in players if G[i] <= 1.5) >=2, name=f"Rest_Strong_Match{t}")
+            m.addConstr(quicksum(x[i, t] for i in players if G[i] <= 0.7) >= 2, name=f"Rest_Strong_Match{t}")
 
     # Objective
     goal_part = quicksum(C[t] * G[i] * x[i, t] for i in players for t in matches)
-    m.setObjective(goal_part ,GRB.MAXIMIZE)
+    m.setObjective(goal_part, GRB.MAXIMIZE)
 
     m.optimize()
+
+    # Check if the model is solved
+    if m.status != GRB.OPTIMAL:
+        print("Optimization failed!")
+        return
 
     print("Match lineups:")
     player_counts = [0] * len(players)  # To track total appearances for each player
@@ -51,7 +51,7 @@ def Best3Attackers():
         print(f"Match {t + 1}: ", end="")
         match_goals = 0  # Goals for this match
         for i in players:
-            if x[i, t].x > 0.5:  # If player is selected
+            if x[i, t].X > 0.5:  # Use .X to access variable values
                 print(f"Player {i + 1} ", end="")
                 player_counts[i] += 1
                 match_goals += G[i]  # Add the player's goals to the match total
@@ -65,6 +65,4 @@ def Best3Attackers():
 
     print(f"\nTotal goals scored in the season: {total_goals:.2f}")
 
-
 Best3Attackers()
-
