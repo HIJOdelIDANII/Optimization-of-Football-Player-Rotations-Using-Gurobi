@@ -1,0 +1,14 @@
+/* Remove margins and paddings */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    font-family: "Georgia", serif;
+    background: linear-gradient(135deg, #121212, #282828);
+    color: white;
+}
+*{
+    box-sizing: border-box;
+}
+
