@@ -1,28 +1,22 @@
 from gurobipy import Model, GRB, quicksum
+from flask import jsonify  # Use jsonify for structured JSON responses
 
-def Best3Attackers():
-
+def bestThree(number_of_games, difficulty_list, physicality_list, goals_list):
     players = range(6)  # 6 attackers
-    matches = range(38)  # 10 matches
-    G = [1.7, 1.6, 1.27, 1.06, 0.85, 0.64]  # Goals per game for each player
-    P = [3, 2, 2, 1, 1, 1]  # Maximum consecutive matches based on physicality
-    C = [1.0, 0.5, 1.5, 1.0, 0.5, 1.5, 1.0, 0.5, 1.5, 1.0, 0.5, 1.5,
-         1.0, 0.5, 1.5, 1.0, 0.5, 1.5, 1.0, 0.5, 1.5, 1.0, 0.5, 1.5,
-         1.0, 0.5, 1.5, 1.0, 0.5, 1.5, 1.0, 0.5, 1.5, 1.0, 0.5, 1.5,
-         1.0, 0.5]
+    matches = range(number_of_games)  # Number of matches
+    G = goals_list  # Goals per game for each player
+    P = physicality_list  # Maximum consecutive matches based on physicality
+    C = difficulty_list  # Match difficulty
 
     m = Model("Football Rotation with Synergy and Match Complexity")
     m.setParam('OutputFlag', 0)
 
-
+    # Decision variables
     x = m.addVars(players, matches, vtype=GRB.BINARY, name="x")  # Player selection
-    y = m.addVars(players, players, matches, vtype=GRB.BINARY, name="y")  # Player pairs in a match
 
-
-    # Team size
+    # Team size constraint
     for t in matches:
         m.addConstr(quicksum(x[i, t] for i in players) == 3, name=f"TeamSize_Match{t}")
-
 
     # Consecutive match constraint
     for i in players:
@@ -35,36 +29,43 @@ def Best3Attackers():
     # Rest key players for easier matches
     for t in matches:
         if C[t] == 0.5:  # Easy match
-            m.addConstr(quicksum(x[i, t] for i in players if G[i] <= 1.5) >=2, name=f"Rest_Strong_Match{t}")
+            m.addConstr(quicksum(x[i, t] for i in players if G[i] <= 0.5) >= 2, name=f"Rest_Strong_Match{t}")
 
-    # Objective
+    # Objective function
     goal_part = quicksum(C[t] * G[i] * x[i, t] for i in players for t in matches)
-    m.setObjective(goal_part ,GRB.MAXIMIZE)
+    m.setObjective(goal_part, GRB.MAXIMIZE)
 
+    # Solve the model
     m.optimize()
 
-    print("Match lineups:")
+    # Prepare JSON response
+    match_lineups = []
     player_counts = [0] * len(players)  # To track total appearances for each player
     total_goals = 0  # To calculate total goals for the season
 
     for t in matches:
-        print(f"Match {t + 1}: ", end="")
+        match_lineup = {"match": t + 1, "players": [], "goals": 0}
         match_goals = 0  # Goals for this match
         for i in players:
             if x[i, t].x > 0.5:  # If player is selected
-                print(f"Player {i + 1} ", end="")
+                match_lineup["players"].append(f"Player {i + 1}")
                 player_counts[i] += 1
                 match_goals += G[i]  # Add the player's goals to the match total
-        print(f" | Goals scored: {match_goals:.2f}")
+        match_lineup["goals"] = match_goals
+        match_lineups.append(match_lineup)
         total_goals += match_goals  # Add match goals to season total
 
-    # Display player statistics
-    print("\nPlayer statistics:")
-    for i in players:
-        print(f"Player {i + 1}: Played {player_counts[i]} matches")
+    # Player statistics
+    player_statistics = [
+        {"player": f"Player {i + 1}", "matches_played": player_counts[i]}
+        for i in players
+    ]
 
-    print(f"\nTotal goals scored in the season: {total_goals:.2f}")
+    # Create the JSON response
+    response = {
+        "lineups": match_lineups,
+        "player_statistics": player_statistics,
+        "total_goals": total_goals
+    }
 
-
-Best3Attackers()
-
+    return jsonify(response)
