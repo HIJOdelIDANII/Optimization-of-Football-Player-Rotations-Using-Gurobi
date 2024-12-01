@@ -210,6 +210,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **HIJOdelIDANII**  
 - GitHub: [HIJOdelIDANII](https://github.com/HIJOdelIDANII)
 
----
 
-You can copy this into your `README.md` file and adjust as necessary!
+
