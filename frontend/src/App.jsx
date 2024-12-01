@@ -1,6 +1,7 @@
 import { useState , useEffect } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MatchSetup } from "./pages/MatchSetup/MatchSetup";
 import {ChooseTeam} from "./pages/ChooseTeam/ChooseTeam.jsx";
 import {TeamPage} from "./pages/TeamPage/TeamPage.jsx";
 function App() {
@@ -17,7 +18,8 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<ChooseTeam teams={teams}/>} />
-            <Route path="/teams/:team_name" element={<TeamPage/>}></Route>  
+            <Route path="/teams/:team_name" element={<TeamPage/>}></Route>
+            <Route path="/setup/:team_name" element={<MatchSetup />} />
           </Routes>
         </BrowserRouter>
     )

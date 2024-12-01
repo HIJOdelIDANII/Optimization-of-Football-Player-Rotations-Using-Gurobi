@@ -1,9 +1,6 @@
 .team-page-container {
   text-align: center;
   padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: #f8f9fa;
   height: 100vh;
 }
@@ -18,17 +15,17 @@
 
 .players-container {
   display: flex;
-  gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
-  align-items: flex-start;
+  gap: 20px;
 }
-.back-button {
-  margin: 20px;
+
+.setup-button {
+  margin-top: 20px;
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: bold;
-  color: #fff;
+  color: white;
   background-color: #007bff;
   border: none;
   border-radius: 5px;
@@ -36,19 +33,7 @@
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.back-button:hover {
+.setup-button:hover {
   background-color: #0056b3;
   transform: scale(1.05);
-}
-
-.back-button:active {
-  transform: scale(1);
-}
-
-.players-container {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
 }
