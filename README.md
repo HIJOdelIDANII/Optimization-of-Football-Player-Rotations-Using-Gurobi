@@ -1,6 +1,4 @@
-Here’s a **well-structured README file** for your project, styled with good Markdown syntax:
 
----
 
 # ⚽ Optimization of Football Player Rotations Using Gurobi
 
