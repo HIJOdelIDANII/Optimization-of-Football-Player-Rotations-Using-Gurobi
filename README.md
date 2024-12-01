@@ -2,7 +2,6 @@
 
 # ⚽ Optimization of Football Player Rotations Using Gurobi
 
-![Project Banner](https://via.placeholder.com/1000x300?text=Optimization+of+Football+Player+Rotations)
 
 ## 📋 Table of Contents
 
