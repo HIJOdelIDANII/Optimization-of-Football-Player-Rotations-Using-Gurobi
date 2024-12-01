@@ -192,7 +192,6 @@ Response:
 ## 🔮 Future Improvements
 
 - Integrate player injury data into the optimization model.
-- Add user authentication for saving team preferences.
 - Visualize player statistics with interactive charts.
 - Expand support to more leagues and teams.
 
