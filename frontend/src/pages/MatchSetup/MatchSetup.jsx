@@ -170,7 +170,7 @@ export const MatchSetup = () => {
         <div>
           <div className="card bg-dark mt-5 p-4 text-white">
             <h2 className="bg-danger text-center p-2 rounded">Statistics</h2>
-            <h4>Total Goals Scored: {stats.total_goals}</h4>
+            <h4>Total Goals Scored: {stats.total_goals.toFixed(2)}</h4>
             <h5>Player Statistics</h5>
             <ul className="list-group">
               {stats.player_statistics.map((playerStat, index) => (
@@ -194,7 +194,7 @@ export const MatchSetup = () => {
                     <h5 className="card-title">
                       Match {lineup.match}: {lineup.opponent}
                     </h5>
-                    <p className="card-text">Goals: {lineup.goals}</p>
+                    <p className="card-text">Goals: {lineup.goals.toFixed(2)}</p>
                     <p className="card-text">
                       Players: {lineup.players.join(", ")}
                     </p>
