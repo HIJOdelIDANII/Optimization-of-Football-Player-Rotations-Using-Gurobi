@@ -16,7 +16,6 @@
 - [Directory Structure](#directory-structure)
 - [Technologies Used](#technologies-used)
 - [Future Improvements](#future-improvements)
-- [License](#license)
 
 ---
 
@@ -193,15 +192,9 @@ Response:
 ## 🔮 Future Improvements
 
 - Integrate player injury data into the optimization model.
-- Add user authentication for saving team preferences.
 - Visualize player statistics with interactive charts.
 - Expand support to more leagues and teams.
 
----
-
-## 📜 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
