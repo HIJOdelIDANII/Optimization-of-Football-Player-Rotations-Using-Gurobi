@@ -7,12 +7,16 @@
   justify-content: center;
   align-items: center;
 }
-
+@font-face {
+  font-family: 'Blacklisted';
+  src: url('../../assets/fonts/Blacklisted.otf') format('opentype');
+}
 .title {
-  font-size: 2.8rem;
+  font-family: 'Blacklisted', sans-serif;
+  font-size: 4rem;
   margin-bottom: 40px;
   color: #fff;
-  font-family: "Times New Roman", serif;
+
   letter-spacing: 1px;
   text-transform: capitalize;
 }
@@ -53,6 +57,7 @@
   height: 100%;
   object-fit: cover;
   transition: filter 0.3s ease;
+
 }
 
 .team-name {
