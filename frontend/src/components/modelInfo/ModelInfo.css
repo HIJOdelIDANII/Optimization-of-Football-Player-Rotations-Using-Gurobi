@@ -1,4 +1,17 @@
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
 
+@keyframes blinkingCursor {
+  50% {
+    border-color: transparent;
+  }
+}
 
 /* Info banner */
 .info-banner {
@@ -12,6 +25,12 @@
   text-align: center;
   z-index: 10; /* Ensure it is on top */
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+
+  /* Display & center */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .info-banner h2 {
@@ -22,6 +41,23 @@
 .info-banner p {
   font-size: 1rem;
   margin-bottom: 20px;
+}
+
+/* Info text wrapper */
+.info-text {
+  display: inline-block;
+  width: 70%; /* adjust as needed */
+}
+
+/* Typewriter effect */
+.typewriter {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 4px solid white;
+  width: 0; /* Start from zero */
+  /* Increase steps(120) or more if your text is long */
+  animation: typewriter 2s steps(120) forwards, blinkingCursor 0.7s step-end infinite alternate;
 }
 
 /* Info button */
@@ -53,9 +89,30 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 100px;
 }
 
 .close-info-button:hover {
   background-color: #a71d2a;
   transform: scale(1.05);
 }
+/* PDF Button */
+.pdf-button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #28a745;  /* Green background */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none; /* Remove underline for links */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pdf-button:hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+

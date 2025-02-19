@@ -90,7 +90,7 @@ def clear_database():
 
 def populate_database():
     clear_database()
-    teams = {team_name: Team(team_name=team_name, logo_url=f"/images/teams/{team_name.replace(' ', '_').lower()}.jpg") for team_name in set(player['team_name'] for player in players_data)}
+    teams = {team_name: Team(team_name=team_name, logo_url=f"/images/teams/nobg/{team_name.replace(' ', '').lower()}.png") for team_name in set(player['team_name'] for player in players_data)}
     db.session.add_all(teams.values())
     db.session.commit()
 

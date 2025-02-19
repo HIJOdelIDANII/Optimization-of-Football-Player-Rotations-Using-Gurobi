@@ -42,9 +42,23 @@
   transform: scale(1.05);
 }
 
+@keyframes wavyEffect {
+  0% {
+    transform: translateY(0px);
+    filter: url("#wave-filter");
+  }
+  50% {
+    transform: translateY(-3px);
+    filter: url("#wave-filter");
+  }
+  100% {
+    transform: translateY(0px);
+    filter: url("#wave-filter");
+  }
+}
+
 .team-card:hover .team-logo {
-  filter: blur(4px);
-  transition: filter 0.3s ease;
+  animation: wavyEffect 1.2s infinite ease-in-out;
 }
 
 .team-card:hover .team-name {
