@@ -2,7 +2,7 @@ from flask import request, jsonify
 from models import Team, Player ,populate_database
 from config import app, db
 from urllib.parse import unquote
-from BackendLogic import bestThree
+from BackendLogica import bestThree
 @app.route('/api/teams/', methods=["GET"])
 def show_teams():
     teams = Team.query.with_entities(Team.id, Team.team_name, Team.logo_url).all()
